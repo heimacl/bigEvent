@@ -106,6 +106,7 @@ $('form').submit(function(event){
 $('.btn-success').click(function(){
 
     var formd=new FormData($('.article_form')[0]);
+    
     $.ajax({
         url:'http://localhost:8000/admin/userinfo_edit',
         type:'post',
