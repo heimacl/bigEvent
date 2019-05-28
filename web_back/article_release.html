@@ -67,7 +67,7 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" id="rich_content"  placeholder="文章内容" name="content">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fugiat illo nihil molestias ab. Laborum eius non atque, totam sapiente quae obcaecati assumenda ratione inventore pariatur maiores, qui libero delectus.
+
                             </textarea>
                     </div>
                 </div>
@@ -88,10 +88,12 @@
 <script src="./js/template-web.js"></script>
 <!-- 准备数据 -->
 <script id="tem" type="text/html">
+    
 {{each data}} 
     <option value='{{$value.id}}'>{{$value.name}}</option>
 {{/each}}
 </script>
+
 <script>
 
     $('.btn-success').click(function (event) {

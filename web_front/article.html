@@ -208,3 +208,40 @@
 </body>
 
 </html>
+<script src="./js/jquery-1.12.4.min.js"></script>
+<script src="./js/template-web.js"></script>
+<script id="tem" type="text/html">
+{{data.author}} 发布于 {{data.date}}&nbsp;&nbsp;&nbsp;分类: {{data.type}}&nbsp;&nbsp;&nbsp;阅读:
+                ({{data.read}})&nbsp;&nbsp;&nbsp;评论: ({{data.comment}})
+
+</script>
+<script>
+$(function(){
+     // 获取id
+        // window.location.search获取到的是？及之后的内容
+        // ?id=230
+    var id=window.location.search.split('=')[1];
+$.ajax({
+    url:'http://localhost:8000/admin/search',
+    type:'get',
+    data:{
+        id:id
+    },
+    success:function(backData){
+        console.log(backData);
+        //渲染到页面
+        $('.article_title').text(backData.data.title);
+
+        $('.article_info').html(template('tem',backData));
+        //清空并渲染内容
+        $('.article_con').html('');
+        // 创建图片并添加
+        $('<img src="" alt="" />').attr('src',backData.data.cover).appendTo('.article_con');
+        $('.article_con').append(backData.data.content);
+        
+    }
+});
+});
+
+
+</script>

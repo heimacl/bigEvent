@@ -215,12 +215,88 @@
             <span>|</span>
             <a href="#">招聘人才</a>
             <span>|</span>
-            <a href="#">友情链接</a>		
+            <a href="#">友情链接</a>
         </div>
-        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司   All Rights Reserved</p>
-        <p>电话：0755-****888    粤ICP备*******8号</p>
+        <p>CopyRight © 2019 深圳大事件信息技术股份有限公司 All Rights Reserved</p>
+        <p>电话：0755-****888 粤ICP备*******8号</p>
     </div>
 
 </body>
 
 </html>
+<script src="./js/jquery-1.12.4.min.js"></script>
+<!-- 导入模板 -->
+<script src="./js/template-web.js"></script>
+<!-- 准备数据  模板 -->
+<script id="wenzhang" type="text/html">
+{{each data}}
+    {{if $index==0}}
+    <li class="first">
+        {{else}}
+        <li>
+    {{/if}}
+        <a href="#"><img src="{{$value.cover}}" alt=""></a>
+        <p>{{$value.title}}</p>
+    </li>
+    
+{{/each}}
+</script>
+<!-- 底部文章 -->
+<script id="dibu" type="text/html">
+    {{each data}}
+    <div class="common_news_list">
+            <a href="./article.html?id={{$value.id}}" class="list_pic"><img src="{{$value.cover}}" alt=""></a>
+            <h4><a href="#">{{$value.title}}</a></h4>
+            <p>{{@$value.content}}</p>
+            <div class="new_info">
+                <span>标签：{{$value.type}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<i class="fa fa-eye"></i>&nbsp;{{$value.read}}
+                    )&nbsp;&nbsp;&nbsp;<i class="fa fa-commenting"></i>&nbsp;评论({{$value.comment}})</span>
+                <b>{{$value.date}}</b>
+            </div>
+        </div>
+{{/each}}
+
+</script>
+<!-- 分类 -->
+<script id="fenlei" type="text/html">
+{{each data}}
+<li><a href="#">{{$value.name}}</a></li>
+{{/each}}
+
+</script>
+<script>
+
+    $(function () {
+   
+        $.ajax({
+            url:'http://localhost:8000/admin/search',
+            type:'get',
+            data:{
+                page:1,
+                perpage:5
+            },
+            success:function(backData){
+                console.log(backData);
+                $('.focus_list').html(template('wenzhang',backData));
+                //清空
+                $('.common_news_list').remove();
+                $('.left_con').append(template('dibu',backData));
+            }
+        });
+   //渲染分类
+        $.ajax({
+            url:'http://localhost:8000/admin/category_search',
+            type:'get',
+            success:function(backData){
+                console.log(backData);
+                $('.level_two').html(template('fenlei',backData));
+                $('.left_menu').html(template('fenlei',backData));
+                
+            }
+        });
+
+
+    });
+     
+
+</script>
